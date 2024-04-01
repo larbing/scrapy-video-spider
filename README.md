@@ -3,4 +3,4 @@
 
 #### 修改配置
 
-settings.py 文件下 修改索引目录配置 INDEXDIR = "/home/abc7223/app/indexdir"
+settings.py 文件下 修改成你本地的目录配置 INDEXDIR = "xxxx"
