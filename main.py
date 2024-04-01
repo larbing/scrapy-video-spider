@@ -33,4 +33,3 @@ import subprocess
 #     for result in results:
 #         print(result)
 
-print( os.path.abspath(os.path.dirname(__file__)) )
