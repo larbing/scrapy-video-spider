@@ -14,9 +14,11 @@ from whoosh.writing import BufferedWriter
 from jieba.analyse import ChineseAnalyzer
 import os.path
 
+from .settings import INDEXDIR
 
 
-indexdir = "/home/rock/app/indexdir"
+
+indexdir = INDEXDIR
 
 class MyspiderPipeline:
 
@@ -32,7 +34,7 @@ class MyspiderPipeline:
             region=KEYWORD(analyzer=analyzer),
             category=KEYWORD(analyzer=analyzer),
             update_context=KEYWORD(analyzer=analyzer)
-            )
+        )
 
         # 创建索引目录
         if not os.path.exists(indexdir):

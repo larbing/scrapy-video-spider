@@ -13,6 +13,9 @@ SPIDER_MODULES = ["myspider.spiders"]
 NEWSPIDER_MODULE = "myspider.spiders"
 
 
+INDEXDIR = "/home/abc7223/app/indexdir"
+
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "myspider (+http://www.yourdomain.com)"
 
@@ -91,3 +94,5 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+
