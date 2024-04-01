@@ -1,0 +1,4 @@
+Scrapy==2.11.1
+jieba==0.42.1
+Werkzeug==3.0.1
+Whoosh==2.7.4
