@@ -25,6 +25,17 @@ from .settings import INDEXDIR,DBDIR
 
 indexdir = INDEXDIR
 
+
+class DBPipeline:
+
+    def __init__(self) -> None:
+        self.db = TinyDB(DBDIR)
+
+    def process_item(self, item, spider):
+        if item:
+            self.db.insert(ItemAdapter(item).asdict())
+            return item
+
 class MergeItemPipeline:
 
     def __init__(self) -> None:
@@ -42,15 +53,7 @@ class MergeItemPipeline:
             return adapter.item
 
 
-class DBPipeline:
 
-    def __init__(self) -> None:
-        self.db = TinyDB(DBDIR)
-
-    def process_item(self, item, spider):
-        if item:
-            self.db.insert(ItemAdapter(item).asdict())
-            return item
 
 class MyspiderPipeline:
 
