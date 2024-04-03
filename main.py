@@ -9,7 +9,7 @@ from jieba.analyse import ChineseAnalyzer
 # import sys
 # import subprocess
 
-from myspider.settings import INDEXDIR
+from myspider.settings import INDEXDIR,DBDIR
 
 analyzer = ChineseAnalyzer()
 schema = Schema(
@@ -30,8 +30,8 @@ ix = open_dir(INDEXDIR,schema=schema)
 qp1 = QueryParser("content", ix.schema)
 qp2 = QueryParser("content", ix.schema)
 
-query1 = qp1.parse("'2024安徽卫视春晚")
-query2 = qp2.parse("情人节前7天")
+query1 = qp1.parse("与凤行")
+query2 = qp2.parse("霹雳情人")
 
 
 # 执行查询
@@ -39,4 +39,12 @@ with ix.searcher() as searcher:
     results = searcher.search(Or([query1,query2]))
     for result in results:
         print(result)
+
+
+from tinydb import TinyDB, Query
+
+db = TinyDB(DBDIR)
+query = Query()
+
+print( db.search(query.name == "与凤行") )
 

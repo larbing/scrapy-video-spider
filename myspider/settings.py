@@ -14,7 +14,7 @@ NEWSPIDER_MODULE = "myspider.spiders"
 
 
 INDEXDIR = "/home/abc7223/app/indexdir"
-
+DBDIR = "/home/abc7223/app/db.json"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "myspider (+http://www.yourdomain.com)"
@@ -67,6 +67,7 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     "myspider.pipelines.MergeItemPipeline": 200,
+    "myspider.pipelines.DBPipeline": 250,
     "myspider.pipelines.MyspiderPipeline": 300,
 }
 

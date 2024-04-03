@@ -7,16 +7,21 @@ import json
 
 import logging
 # useful for handling different item types with a single interface
+
+
 from itemadapter import ItemAdapter
+
 
 from whoosh.index import create_in,open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
 from whoosh.writing import BufferedWriter
 from jieba.analyse import ChineseAnalyzer
+from tinydb import TinyDB, Query
+
 import os.path
 
-from .settings import INDEXDIR
+from .settings import INDEXDIR,DBDIR
 
 indexdir = INDEXDIR
 
@@ -35,6 +40,17 @@ class MergeItemPipeline:
         else:
             adapter.update(self.items.get(id))
             return adapter.item
+
+
+class DBPipeline:
+
+    def __init__(self) -> None:
+        self.db = TinyDB(DBDIR)
+
+    def process_item(self, item, spider):
+        if item:
+            self.db.insert(ItemAdapter(item).asdict())
+            return item
 
 class MyspiderPipeline:
 
@@ -62,6 +78,8 @@ class MyspiderPipeline:
 
     def process_item(self, item, spider):
         logging.debug(item)
+        if item is None:
+            return
         adapter = ItemAdapter(item)
         self.writer.add_document(
             id=adapter.get("id"),
