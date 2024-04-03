@@ -8,7 +8,7 @@ from myspider.items import VideoItem
 def md5_hash(string:str):
     return md5(string.encode('utf-8')).hexdigest()
 
-class ffzySpider(scrapy.Spider):
+class MySpider(scrapy.Spider):
     name = "ffzy5"
     allowed_domains = ["ffzy5.tv"]
 

@@ -9,7 +9,7 @@ from myspider.items import VideoItem
 def md5_hash(string:str):
     return md5(string.encode('utf-8')).hexdigest()
 
-class ffzySpider(scrapy.Spider):
+class MySpider(scrapy.Spider):
     name = "lzizy"
 
     allowed_domains = ["lzizy.net"]
@@ -18,7 +18,7 @@ class ffzySpider(scrapy.Spider):
 
     def start_requests(self):
         # Loop through pages from 1 to 2
-        for page in range(1, 100):
+        for page in range(1, 2):
             # Generate URL for each page
             url = f"http://lzizy.net/index.php/index/index/page/{page}.html"
             # Send a request to the URL and parse the response

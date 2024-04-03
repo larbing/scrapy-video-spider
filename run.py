@@ -1,10 +1,10 @@
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from myspider.spiders.ffzy5 import ffzySpider 
+from myspider.spiders import lzizy
 
 
 
 if __name__ == '__main__':
     process = CrawlerProcess(get_project_settings())
-    process.crawl(ffzySpider)
+    process.crawl(lzizy.MySpider)
     process.start()
