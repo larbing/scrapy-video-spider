@@ -4,6 +4,8 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 import json
+
+import logging
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 
@@ -16,9 +18,23 @@ import os.path
 
 from .settings import INDEXDIR
 
-
-
 indexdir = INDEXDIR
+
+class MergeItemPipeline:
+
+    def __init__(self) -> None:
+        self.items = {}
+
+    def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
+        id = adapter.get("id")
+
+        if id not in self.items.keys():
+            self.items[id] = item
+        
+        else:
+            adapter.update(self.items.get(id))
+            return adapter.item
 
 class MyspiderPipeline:
 
@@ -45,6 +61,7 @@ class MyspiderPipeline:
         self.writer = BufferedWriter(self.ix, period=10)
 
     def process_item(self, item, spider):
+        logging.debug(item)
         adapter = ItemAdapter(item)
         self.writer.add_document(
             id=adapter.get("id"),
@@ -56,7 +73,6 @@ class MyspiderPipeline:
             update_context=adapter.get('update_context')
         )
         self.writer.commit()
-
         return item
     
     def open_spider(self, spider):

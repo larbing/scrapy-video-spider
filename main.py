@@ -30,8 +30,8 @@ ix = open_dir(INDEXDIR,schema=schema)
 qp1 = QueryParser("content", ix.schema)
 qp2 = QueryParser("content", ix.schema)
 
-query1 = qp1.parse("星之金币续集")
-query2 = qp2.parse("与凤行")
+query1 = qp1.parse("'2024安徽卫视春晚")
+query2 = qp2.parse("情人节前7天")
 
 
 # 执行查询
