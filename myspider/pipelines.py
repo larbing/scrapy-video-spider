@@ -74,6 +74,7 @@ class MyspiderPipeline:
             language=KEYWORD(stored=True,analyzer=analyzer),
             release_date=KEYWORD(stored=True,analyzer=analyzer),
             rating=KEYWORD(stored=True,analyzer=analyzer),
+            updated=KEYWORD(stored=True,analyzer=analyzer),
             status=KEYWORD(stored=True,analyzer=analyzer)
         )
 
@@ -99,6 +100,7 @@ class MyspiderPipeline:
             release_date=adapter.get('release_date'),
             language=adapter.get('language'),
             rating=adapter.get('rating'),
+            updated=adapter.get('updated'),
             status=adapter.get('update_context')
         )
         self.writer.commit()

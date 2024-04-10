@@ -21,6 +21,7 @@ schema = Schema(
             language=KEYWORD(stored=True,analyzer=analyzer),
             release_date=KEYWORD(stored=True,analyzer=analyzer),
             rating=KEYWORD(stored=True,analyzer=analyzer),
+            updated=KEYWORD(stored=True,analyzer=analyzer),
             status=KEYWORD(stored=True,analyzer=analyzer)
 )
 ix = open_dir(INDEXDIR,schema=schema)
