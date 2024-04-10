@@ -52,9 +52,13 @@ class MergeItemPipeline:
             adapter.update(self.items.get(id))
             return adapter.item
 
-
-
-
+"""
+        "name": "Example Video",
+        "video_type": "Movie",
+        "content_type": "Action",
+        "region": "USA",
+        "release_date": "2023",
+"""
 class MyspiderPipeline:
 
     def __init__(self) -> None:
@@ -62,13 +66,15 @@ class MyspiderPipeline:
         analyzer = ChineseAnalyzer()
         # 定义索引的模式
         schema = Schema(
-            id=ID(stored=True),
-            title=TEXT(stored=True,analyzer=analyzer), 
-            content=TEXT(analyzer=analyzer),
-            url=STORED,
-            region=KEYWORD(analyzer=analyzer),
-            category=KEYWORD(analyzer=analyzer),
-            update_context=KEYWORD(analyzer=analyzer)
+            id=ID(stored=True,unique=True),
+            name=TEXT(stored=True,analyzer=analyzer), 
+            image_url=STORED,
+            region=KEYWORD(stored=True,analyzer=analyzer),
+            content_type=KEYWORD(stored=True,analyzer=analyzer),
+            language=KEYWORD(stored=True,analyzer=analyzer),
+            release_date=KEYWORD(stored=True,analyzer=analyzer),
+            rating=KEYWORD(stored=True,analyzer=analyzer),
+            status=KEYWORD(stored=True,analyzer=analyzer)
         )
 
         # 创建索引目录
@@ -84,14 +90,16 @@ class MyspiderPipeline:
         if item is None:
             return
         adapter = ItemAdapter(item)
-        self.writer.add_document(
+        self.writer.update_document(
             id=adapter.get("id"),
-            title=adapter.get('name'),
-            content=adapter.get('name'),
-            url=adapter.get('url'),
+            name=adapter.get('name'),
+            image_url=adapter.get('image_url'),
             region=adapter.get('region'),
-            category=adapter.get('category'),
-            update_context=adapter.get('update_context')
+            content_type=adapter.get('category'),
+            release_date=adapter.get('release_date'),
+            language=adapter.get('language'),
+            rating=adapter.get('rating'),
+            status=adapter.get('update_context')
         )
         self.writer.commit()
         return item

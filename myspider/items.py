@@ -24,7 +24,7 @@ class VideoItem(scrapy.Item):
     rating = scrapy.Field()
     director = scrapy.Field()
     cast = scrapy.Field()
-    releaseDate = scrapy.Field()
+    release_date = scrapy.Field()
     language = scrapy.Field()
     status = scrapy.Field()
     updated = scrapy.Field()

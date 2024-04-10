@@ -34,7 +34,7 @@ class MySpider(scrapy.Spider):
             item['update_context'] = selector.xpath('//a[@class="videoName"]/i/text()').get()
             item['region'] = selector.xpath('//span[@class="region"]/text()').get()
             item['category'] = selector.xpath('//span[@class="category type"]/text()').get()
-            item['rating'] = selector.xpath('//a[@class="address"]/text()').get()
+            # item['rating'] = selector.xpath('//a[@class="address"]/text()').get()
             item['id'] = md5_hash(item['url'])
             item['site_name'] = "量子"
 
@@ -68,7 +68,7 @@ class MySpider(scrapy.Spider):
             "rating" : "<p>豆瓣：(.*) 分</p>",
             "director" : "<p>导演：(.*)</p>",
             "cast" : "<p>演员：(.*)</p>",
-            "releaseDate"  :  "<p>年代：(.*)</p>",
+            "release_date"  :  "<p>年代：(.*)</p>",
             "region" : "<p>地区：(.*)</p>" ,
             "language" : "<p>语言：(.*)</p>",
             "status" : "<p>状态：(.*)</p>",
