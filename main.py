@@ -15,8 +15,9 @@ analyzer = ChineseAnalyzer()
 schema = Schema(
             id=ID(stored=True,unique=True),
             name=TEXT(stored=True,analyzer=analyzer), 
+            title=KEYWORD(stored=True),
             image_url=STORED,
-            region=KEYWORD(stored=True,analyzer=analyzer),
+            region=KEYWORD(stored=True),
             content_type=KEYWORD(stored=True,analyzer=analyzer),
             language=KEYWORD(stored=True,analyzer=analyzer),
             release_date=KEYWORD(stored=True,analyzer=analyzer),
@@ -27,14 +28,12 @@ schema = Schema(
 ix = open_dir(INDEXDIR,schema=schema)
 
 
-
-
 # # 创建一个查询解析器
-qp1 = QueryParser("region", ix.schema)
-qp2 = QueryParser("name", ix.schema)
+qp1 = QueryParser("title", ix.schema)
+qp2 = QueryParser("title", ix.schema)
 
-query1 = qp1.parse("大陆")
-query2 = qp2.parse("我的")
+query1 = qp1.parse("红衣醉")
+query2 = qp1.parse("千谎百计")
 
 with ix.searcher() as searcher:
     results = searcher.search(Or([query1,query2]))

@@ -16,7 +16,7 @@ class MySpider(scrapy.Spider):
 
     def start_requests(self):
         # Loop through pages from 1 to 2
-        for page in range(1, 2):
+        for page in range(1, 50):
             # Generate URL for each page
             url = f"http://lzizy.net/index.php/index/index/page/{page}.html"
             # Send a request to the URL and parse the response

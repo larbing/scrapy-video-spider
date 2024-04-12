@@ -68,6 +68,7 @@ class MyspiderPipeline:
         schema = Schema(
             id=ID(stored=True,unique=True),
             name=TEXT(stored=True,analyzer=analyzer), 
+            title=KEYWORD(stored=True),
             image_url=STORED,
             region=KEYWORD(stored=True,analyzer=analyzer),
             content_type=KEYWORD(stored=True,analyzer=analyzer),
@@ -94,6 +95,7 @@ class MyspiderPipeline:
         self.writer.update_document(
             id=adapter.get("id"),
             name=adapter.get('name'),
+            title=adapter.get('name'),
             image_url=adapter.get('image_url'),
             region=adapter.get('region'),
             content_type=adapter.get('category'),
