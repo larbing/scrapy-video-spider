@@ -33,7 +33,7 @@ class DBPipeline:
 
     def process_item(self, item, spider):
         if item:
-            self.db.insert(ItemAdapter(item).asdict())
+            self.db.upsert(ItemAdapter(item).asdict(),Query().id == item['id'])
             return item
 
 class MergeItemPipeline:
