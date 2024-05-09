@@ -67,6 +67,7 @@ class MyspiderPipeline:
         # 定义索引的模式
         schema = Schema(
             id=ID(stored=True,unique=True),
+            vid=ID(stored=True),
             name=TEXT(stored=True,analyzer=analyzer), 
             title=KEYWORD(stored=True),
             image_url=STORED,
@@ -94,6 +95,7 @@ class MyspiderPipeline:
         adapter = ItemAdapter(item)
         self.writer.update_document(
             id=adapter.get("id"),
+            vid=adapter.get("vid"),
             name=adapter.get('name'),
             title=adapter.get('name'),
             image_url=adapter.get('image_url'),

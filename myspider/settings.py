@@ -15,6 +15,7 @@ NEWSPIDER_MODULE = "myspider.spiders"
 
 INDEXDIR = "/home/abc7223/app/indexdir"
 DBDIR = "/home/abc7223/app/db.json"
+ID_PATH = "/home/abc7223/app/id"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "myspider (+http://www.yourdomain.com)"

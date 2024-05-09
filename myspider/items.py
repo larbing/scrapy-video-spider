@@ -15,6 +15,7 @@ class VideoItem(scrapy.Item):
     region = scrapy.Field()
     category = scrapy.Field()
     id = scrapy.Field()
+    vid = scrapy.Field()
     links = scrapy.Field()
     m3u8_links = scrapy.Field()
 

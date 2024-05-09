@@ -5,7 +5,8 @@ from hashlib import md5
 from scrapy.selector import Selector
 from myspider.items import VideoItem
 
-from myspider.utils import md5_hash
+
+from myspider.utils import md5_hash,generate_incremental_id
 
 class MySpider(scrapy.Spider):
     name = "lzizy"
@@ -36,6 +37,7 @@ class MySpider(scrapy.Spider):
             item['category'] = selector.xpath('//span[@class="category type"]/text()').get()
             # item['rating'] = selector.xpath('//a[@class="address"]/text()').get()
             item['id'] = md5_hash(item['url'])
+            item['vid'] = str(generate_incremental_id())
             item['site_name'] = "量子"
 
             yield item
