@@ -1,9 +1,10 @@
 import os
 import time
 import threading
+import itertools
 from hashlib import md5
 
-from myspider.settings import ID_PATH
+from myspider.settings import IDDIR
 
 """
     Calculate the MD5 hash of the input string.
@@ -17,24 +18,37 @@ from myspider.settings import ID_PATH
 def md5_hash(string:str):
     return md5(string.encode('utf-8')).hexdigest()
 
-def generate_incremental_id(file_path=ID_PATH):
-    lock = threading.Lock()
+class IncrementalIdGenerator:
+    def __init__(self,max=5000, file_path=IDDIR):
+        self.file_path = file_path
+        self.lock = threading.Lock()
+        self.id_max   = max
+        self.id_count = max
+        self.id_index = int(time.time())
+        self.id_step  = 1
 
-    def get_current_id():
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as file:
-                current_id = int(file.read())
-        else:
-            current_id = int(time.time())
-        return current_id
+        with self.lock:
+            self.preallocate_ids()
 
-    def update_id(new_id,inc=1):
-        new_id += inc
-        with open(file_path, 'w') as file:
-            file.write(str(new_id))
+    def preallocate_ids(self):
+        if os.path.exists(self.file_path):
+            with open(self.file_path, 'r') as file:
+                self.id_index = int(file.read())
+        
+        with open(self.file_path, 'w') as file:
+            file.write(str(self.id_index + self.id_max))
+        
+        self.producer = self.infinite_producer()
 
-    with lock:
-        current_id = get_current_id()
-        update_id(current_id)
+    def infinite_producer(self):
+        for id in itertools.count(self.id_index,self.id_step):
+            yield id
+    
+    def get_id(self):
+        if self.id_count < 1:
+            self.preallocate_ids()
 
-    return current_id
+        self.id_count -=1
+        return next(self.producer)
+        
+idGenerator = IncrementalIdGenerator()

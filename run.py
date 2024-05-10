@@ -7,4 +7,4 @@ from myspider.spiders import lzizy
 if __name__ == '__main__':
     process = CrawlerProcess(get_project_settings())
     process.crawl(lzizy.MySpider)
-    process.start()
+    process.start()   

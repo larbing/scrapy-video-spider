@@ -6,7 +6,7 @@ from scrapy.selector import Selector
 from myspider.items import VideoItem
 
 
-from myspider.utils import md5_hash,generate_incremental_id
+from myspider.utils import md5_hash,idGenerator
 
 class MySpider(scrapy.Spider):
     name = "lzizy"
@@ -17,11 +17,27 @@ class MySpider(scrapy.Spider):
 
     def start_requests(self):
         # Loop through pages from 1 to 2
-        for page in range(1, 50):
-            # Generate URL for each page
-            url = f"http://lzizy.net/index.php/index/index/page/{page}.html"
-            # Send a request to the URL and parse the response
+        # for page in range(1, 1000):
+        #     # Generate URL for each page
+        #     url = f"http://lzizy.net/index.php/index/index/page/{page}.html"
+        #     # Send a request to the URL and parse the response
+        #     yield scrapy.Request(url, self.parse)
+        # for page in range(1,100):
+        #     url = f"http://lzizy.net/index.php/vod/type/id/1/page/{page}.html"
+        #     yield scrapy.Request(url, self.parse)
+
+        for page in range(101,280):
+            url = f"http://lzizy.net/index.php/vod/type/id/2/page/{page}.html"
             yield scrapy.Request(url, self.parse)
+
+        # for page in range(1,76):
+        #     url = f"http://lzizy.net/index.php/vod/type/id/3/page/{page}.html"
+        #     yield scrapy.Request(url, self.parse)
+
+        # for page in range(1,116):
+        #     url = f"http://lzizy.net/index.php/vod/type/id/4/page/{page}.html"
+        #     yield scrapy.Request(url, self.parse)
+
 
         #yield scrapy.Request("http://lzizy.net/index.php/vod/detail/id/84384.html",self.parse1)
 
@@ -37,7 +53,7 @@ class MySpider(scrapy.Spider):
             item['category'] = selector.xpath('//span[@class="category type"]/text()').get()
             # item['rating'] = selector.xpath('//a[@class="address"]/text()').get()
             item['id'] = md5_hash(item['url'])
-            item['vid'] = str(generate_incremental_id())
+            item['vid'] = str(idGenerator.get_id())
             item['site_name'] = "量子"
 
             yield item
@@ -54,16 +70,7 @@ class MySpider(scrapy.Spider):
     
         yield item
 
-    """
-        Parses the context node from the response and extracts information using the specified patterns.
 
-        Args:
-            response: The response object containing the HTML content.
-            item (VideoItem): The VideoItem object to store the extracted information.
-
-        Returns:
-            None
-    """
     def _parse_context_node(self,response,item: VideoItem):
         pattern_dict = {
             "name" : "<p>片名：(.*)</p>" ,
@@ -82,9 +89,7 @@ class MySpider(scrapy.Spider):
             output = re.search(pattern_dict[key],context)
             item[key]  = output.groups()[0] if output else "Null"
     
-    """
-        Parse the links node in the response and extract 'links' and 'm3u8_links' into the item dictionary.
-    """
+
     def _parse_links_node(self,response,item):
         item['links'] = []
         nodes = response.xpath('//div[@class="playlist wbox liangzi"]/li')

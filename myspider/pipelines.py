@@ -83,13 +83,14 @@ class MyspiderPipeline:
         # 创建索引目录
         if not os.path.exists(indexdir):
             os.mkdir(indexdir)
-
-        # 创建索引
-        self.ix = create_in(indexdir, schema)
+            self.ix = create_in(indexdir, schema)
+        else:
+            self.ix = open_dir(indexdir)
+        
         self.writer = BufferedWriter(self.ix, period=10)
 
     def process_item(self, item, spider):
-        logging.debug(item)
+        # logging.debug(item)
         if item is None:
             return
         adapter = ItemAdapter(item)
