@@ -4,12 +4,13 @@ from whoosh.writing import BufferedWriter
 from whoosh.qparser import QueryParser,AndGroup
 from whoosh.query import *
 from jieba.analyse import ChineseAnalyzer
+import pickledb
 
 # import os.path
 # import sys
 # import subprocess
 
-from myspider.settings import INDEXDIR,DBDIR
+from myspider.settings import INDEXDIR,DBDIR,PICKLEDB
 
 # analyzer = ChineseAnalyzer()
 # schema = Schema(
@@ -42,10 +43,17 @@ from myspider.settings import INDEXDIR,DBDIR
 #         print(result)
 
 
-from tinydb import TinyDB, Query
+# from tinydb import TinyDB, Query
 
-db = TinyDB(DBDIR)
-query = Query()
+# db = TinyDB(DBDIR)
+# query = Query()
 
-print( db.search( query.vid == "1715371248" ))
 
+# db.insert({"a":1})
+# print( db.search( query.vid == "1715382541" ))
+
+
+db = pickledb.load(PICKLEDB, False)
+print(db.totalkeys())
+# for i in range(10000):
+#     db.set(f"{i}",i)

@@ -22,21 +22,21 @@ class MySpider(scrapy.Spider):
         #     url = f"http://lzizy.net/index.php/index/index/page/{page}.html"
         #     # Send a request to the URL and parse the response
         #     yield scrapy.Request(url, self.parse)
-        # for page in range(1,100):
-        #     url = f"http://lzizy.net/index.php/vod/type/id/1/page/{page}.html"
-        #     yield scrapy.Request(url, self.parse)
+        for page in range(1,200):
+            url = f"http://lzizy.net/index.php/vod/type/id/1/page/{page}.html"
+            yield scrapy.Request(url, self.parse)
 
-        for page in range(101,280):
+        for page in range(1,200):
             url = f"http://lzizy.net/index.php/vod/type/id/2/page/{page}.html"
             yield scrapy.Request(url, self.parse)
 
-        # for page in range(1,76):
-        #     url = f"http://lzizy.net/index.php/vod/type/id/3/page/{page}.html"
-        #     yield scrapy.Request(url, self.parse)
+        for page in range(1,50):
+            url = f"http://lzizy.net/index.php/vod/type/id/3/page/{page}.html"
+            yield scrapy.Request(url, self.parse)
 
-        # for page in range(1,116):
-        #     url = f"http://lzizy.net/index.php/vod/type/id/4/page/{page}.html"
-        #     yield scrapy.Request(url, self.parse)
+        for page in range(1,100):
+            url = f"http://lzizy.net/index.php/vod/type/id/4/page/{page}.html"
+            yield scrapy.Request(url, self.parse)
 
 
         #yield scrapy.Request("http://lzizy.net/index.php/vod/detail/id/84384.html",self.parse1)
@@ -106,3 +106,12 @@ class MySpider(scrapy.Spider):
             output = selector.xpath('//input[@type="checkbox"]/@value').get()
             if output:
                 item['m3u8_links'].append(output)
+
+
+class DailyCrawler(MySpider):
+    name = 'lzizy_daily'
+    def start_requests(self):
+        for t in range(1, 4):
+            for page in range(1,10):
+                url = f"http://lzizy.net/index.php/vod/type/id/{t}/page/{page}.html"
+                yield scrapy.Request(url, self.parse)

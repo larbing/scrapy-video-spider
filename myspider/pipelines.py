@@ -17,7 +17,7 @@ from whoosh.fields import *
 from whoosh.qparser import QueryParser
 from whoosh.writing import BufferedWriter
 from jieba.analyse import ChineseAnalyzer
-from tinydb import TinyDB, Query
+import pickledb
 
 import os.path
 
@@ -29,12 +29,16 @@ indexdir = INDEXDIR
 class DBPipeline:
 
     def __init__(self) -> None:
-        self.db = TinyDB(DBDIR)
+        self.db = pickledb.load(DBDIR, False)
 
     def process_item(self, item, spider):
         if item:
-            self.db.upsert(ItemAdapter(item).asdict(),Query().id == item['id'])
+            self.db.set(item['id'],ItemAdapter(item).asdict())
+            self.db.set(item['vid'],item['id'])
             return item
+      
+    def close_spider(self, spider):
+        self.db.dump()
 
 class MergeItemPipeline:
 
@@ -49,16 +53,9 @@ class MergeItemPipeline:
             self.items[id] = item
         
         else:
-            adapter.update(self.items.get(id))
+            adapter.update(self.items.pop(id))
             return adapter.item
 
-"""
-        "name": "Example Video",
-        "video_type": "Movie",
-        "content_type": "Action",
-        "region": "USA",
-        "release_date": "2023",
-"""
 class MyspiderPipeline:
 
     def __init__(self) -> None:

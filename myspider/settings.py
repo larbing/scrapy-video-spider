@@ -14,8 +14,8 @@ NEWSPIDER_MODULE = "myspider.spiders"
 
 
 INDEXDIR = "/data/app/indexdir"
-DBDIR = "/data/app/db.json"
-IDDIR = "/data/app/id"
+DBDIR =    "/data/app/pickle.db"
+IDDIR    = "/data/app/id"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "myspider (+http://www.yourdomain.com)"
