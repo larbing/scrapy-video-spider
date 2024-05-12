@@ -2,25 +2,17 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
 import json
-
+import os.path
 import logging
-# useful for handling different item types with a single interface
-
-
-from itemadapter import ItemAdapter
-
+import pickledb
 
 from whoosh.index import create_in,open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
 from whoosh.writing import BufferedWriter
 from jieba.analyse import ChineseAnalyzer
-import pickledb
-
-import os.path
-
+from itemadapter import ItemAdapter
 from .settings import INDEXDIR,DBDIR
 
 indexdir = INDEXDIR

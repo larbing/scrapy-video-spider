@@ -10,7 +10,7 @@ import pickledb
 # import sys
 # import subprocess
 
-from myspider.settings import INDEXDIR,DBDIR,PICKLEDB
+from myspider.settings import INDEXDIR,DBDIR
 
 # analyzer = ChineseAnalyzer()
 # schema = Schema(
@@ -43,17 +43,9 @@ from myspider.settings import INDEXDIR,DBDIR,PICKLEDB
 #         print(result)
 
 
-# from tinydb import TinyDB, Query
-
-# db = TinyDB(DBDIR)
-# query = Query()
 
 
-# db.insert({"a":1})
-# print( db.search( query.vid == "1715382541" ))
-
-
-db = pickledb.load(PICKLEDB, False)
-print(db.totalkeys())
+db = pickledb.load(DBDIR, False)
+print(db.get('e14afc1074f34ab38612a9f7874a6803')['links'])
 # for i in range(10000):
 #     db.set(f"{i}",i)
