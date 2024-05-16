@@ -25,6 +25,10 @@ class DBPipeline:
 
     def process_item(self, item, spider):
         if item:
+            info = self.db.get(item['id'])
+            if info:
+                item['vid'] = info['vid']
+
             self.db.set(item['id'],ItemAdapter(item).asdict())
             self.db.set(item['vid'],item['id'])
             return item

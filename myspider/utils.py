@@ -10,7 +10,7 @@ def md5_hash(string:str):
     return md5(string.encode('utf-8')).hexdigest()
 
 class IncrementalIdGenerator:
-    def __init__(self,max=5000, file_path=IDDIR):
+    def __init__(self,max=1000, file_path=IDDIR):
         self.file_path = file_path
         self.lock = threading.Lock()
         self.id_max   = max
