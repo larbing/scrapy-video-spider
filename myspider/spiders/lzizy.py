@@ -112,6 +112,6 @@ class DailyCrawler(MySpider):
     name = 'lzizy_daily'
     def start_requests(self):
         for t in range(1, 4):
-            for page in range(1,10):
+            for page in range(1,5):
                 url = f"http://lzizy.net/index.php/vod/type/id/{t}/page/{page}.html"
                 yield scrapy.Request(url, self.parse)
