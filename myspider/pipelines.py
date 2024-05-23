@@ -3,10 +3,12 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import json
+
 import os.path
 import logging
 import pickledb
 
+from time import strftime,strptime
 from whoosh.index import create_in,open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
@@ -87,6 +89,8 @@ class MyspiderPipeline:
         if item is None:
             return
         adapter = ItemAdapter(item)
+        # updated = adapter.get('updated')
+        # updated = strftime("%Y%m%d",strptime(updated,"%Y-%m-%d"))
         self.writer.update_document(
             id=adapter.get("id"),
             vid=adapter.get("vid"),
@@ -98,7 +102,7 @@ class MyspiderPipeline:
             release_date=adapter.get('release_date'),
             language=adapter.get('language'),
             rating=adapter.get('rating'),
-            updated=adapter.get('updated'),
+            updated=adapter.get('updated').replace("-",""),
             status=adapter.get('update_context')
         )
         self.writer.commit()
