@@ -3,18 +3,11 @@
 
 #### 修改配置
 
-settings.py 文件下 修改成你本地的目录配置 INDEXDIR = "xxxx"
-
-
+先创建数据目录 /data/app
 
 
 #### 运行爬虫 
 ~~~
-cd scrapy-video-spider
-
-scrapy crawl ffzy5
-
-或者
-
-运行 run.py
+run.py 全量采集
+daily_crawler.py 增量采集
 ~~~
